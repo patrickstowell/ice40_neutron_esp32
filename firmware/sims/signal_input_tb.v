@@ -1,0 +1,234 @@
+`define SYNTHESIS
+`timescale 1ns / 1ps
+
+module signal_input_tb();
+
+  initial
+  begin
+    $dumpfile("signal_input_tb.vcd");
+    $dumpvars(0,signal_input_tb);
+    # 10000 $finish;
+  end
+
+  wire CLK_SLOW;
+  wire RESET_SLOW;
+
+  wire CLK_FAST;
+  wire RESET_FAST;
+
+  CLOCK_HANDLER clock_handler(
+    CLK_SLOW,
+    RESET_SLOW,
+    CLK_FAST,
+    RESET_FAST
+  );
+
+
+  reg DISCOUT1;
+  reg DISCOUT2;
+  reg [2:0] SIGS;
+  reg [7:0] SIGNAL_INPUT_CONFIG;
+  wire SIGNAL_LINE_1;
+  wire SIGNAL_LINE_1_GEN;
+  wire SIGNAL_LINE_2;
+  wire SIGNAL_LINE_2_GEN;
+
+  SIGNAL_INPUT signal_input(
+    .CLK(CLK_FAST),
+    .SIGNAL1(DISCOUT1),
+    .SIGNAL2(DISCOUT2),
+    .SIGNAL_LINE_1(SIGNAL_LINE_1_GEN),
+    .SIGNAL_LINE_2(SIGNAL_LINE_2_GEN),
+    .read_mode(READ_MODE),
+    .mconfig(SIGNAL_INPUT_CONFIG)
+  );
+
+
+initial begin
+  DISCOUT1 <= 0;
+  DISCOUT2 <= 0;
+
+  // Everything off
+  SIGNAL_INPUT_CONFIG[0] <= 0;
+  SIGNAL_INPUT_CONFIG[1] <= 0;
+  SIGNAL_INPUT_CONFIG[2] <= 0;
+  SIGNAL_INPUT_CONFIG[3] <= 0;
+  SIGNAL_INPUT_CONFIG[4] <= 0;
+  SIGNAL_INPUT_CONFIG[5] <= 0;
+  SIGNAL_INPUT_CONFIG[6] <= 0;
+  SIGNAL_INPUT_CONFIG[7] <= 0;
+
+  #400  DISCOUT1 <= 1;
+  DISCOUT2 <= 1;
+  #1 DISCOUT1 <= 0;
+  DISCOUT2 <= 0;
+
+// reg enable_ch1; // - 0 enable 1
+// reg enable_ch2; // - 1 enable 2
+// reg invertlogic_ch1; // - 2 invert logic 1
+// reg invertlogic_ch2; // - 3 invert logic 2
+// reg edgeonly_ch1; // - 4 edge only
+// reg edgeonly_ch2; // - 5 edge only
+// reg pulser_ch1; // - 6 Pulser : Simulate Combined Pulse [Every 2048 clock cycles]
+// reg pulser_ch2; // - 7 Pulser : Simulate Combined Pulse [Every 2048 clock cycles]
+
+  // PULSE 1 NON INVERTING
+  #10 
+  SIGNAL_INPUT_CONFIG[0] = 1;
+  #100  
+  DISCOUT1 <= 1;
+  DISCOUT2 <= 1;
+  #1 
+  DISCOUT1 <= 0;
+  DISCOUT2 <= 0;
+  #200
+
+  // PULSE 2 NON INVERTING
+  #10 
+  SIGNAL_INPUT_CONFIG[0] = 0;
+  SIGNAL_INPUT_CONFIG[1] = 1;
+  #100  
+  DISCOUT1 <= 1;
+  DISCOUT2 <= 1;
+  #1 
+  DISCOUT1 <= 0;
+  DISCOUT2 <= 0;
+  #200
+
+  // PULSE BOTH NON INVERTING
+  #10 
+  SIGNAL_INPUT_CONFIG[0] = 1;
+  SIGNAL_INPUT_CONFIG[1] = 1;
+  #100  
+  DISCOUT1 <= 1;
+  DISCOUT2 <= 1;
+  #1 
+  DISCOUT1 <= 0;
+  DISCOUT2 <= 0;
+  #200
+
+  // PULSE 1 INVERTING
+  #10 
+  SIGNAL_INPUT_CONFIG[0] = 1;
+  SIGNAL_INPUT_CONFIG[1] = 0;
+  SIGNAL_INPUT_CONFIG[2] = 1;
+  #100  
+  DISCOUT1 <= 1;
+  DISCOUT2 <= 1;
+  #1 
+  DISCOUT1 <= 0;
+  DISCOUT2 <= 0;
+  #200
+
+  // PULSE 2 INVERTING
+  #10 
+  SIGNAL_INPUT_CONFIG[0] = 0;
+  SIGNAL_INPUT_CONFIG[1] = 1;
+  SIGNAL_INPUT_CONFIG[2] = 0;
+  SIGNAL_INPUT_CONFIG[3] = 1;
+  #100  
+  DISCOUT1 <= 1;
+  DISCOUT2 <= 1;
+  #1 
+  DISCOUT1 <= 0;
+  DISCOUT2 <= 0;
+  #200
+
+  // PULSE BOTH NONINVERTING EDGECHECK1
+  #10 
+  SIGNAL_INPUT_CONFIG[0] = 1;
+  SIGNAL_INPUT_CONFIG[1] = 1;
+  SIGNAL_INPUT_CONFIG[2] = 0;
+  SIGNAL_INPUT_CONFIG[3] = 0;
+  SIGNAL_INPUT_CONFIG[4] = 0;
+  SIGNAL_INPUT_CONFIG[5] = 0;
+  #100  
+  DISCOUT1 <= 1;
+  DISCOUT2 <= 1;
+  #1 
+  DISCOUT1 <= 0;
+  DISCOUT2 <= 0;
+  #200
+
+  // PULSE BOTH NONINVERTING EDGECHECK2
+  #10 
+  SIGNAL_INPUT_CONFIG[0] = 1;
+  SIGNAL_INPUT_CONFIG[1] = 1;
+  SIGNAL_INPUT_CONFIG[2] = 0;
+  SIGNAL_INPUT_CONFIG[3] = 0;
+  SIGNAL_INPUT_CONFIG[4] = 0;
+  SIGNAL_INPUT_CONFIG[5] = 0;
+  #100  
+  DISCOUT1 <= 1;
+  DISCOUT2 <= 1;
+  #30
+  DISCOUT1 <= 0;
+  DISCOUT2 <= 0;
+  #200
+
+
+  // PULSE BOTH NONINVERTING EDGECHECK3
+  #10 
+  SIGNAL_INPUT_CONFIG[0] = 1;
+  SIGNAL_INPUT_CONFIG[1] = 1;
+  SIGNAL_INPUT_CONFIG[2] = 0;
+  SIGNAL_INPUT_CONFIG[3] = 0;
+  SIGNAL_INPUT_CONFIG[4] = 1;
+  SIGNAL_INPUT_CONFIG[5] = 1;
+  #100  
+  DISCOUT1 <= 1;
+  DISCOUT2 <= 1;
+  #1 
+  DISCOUT1 <= 0;
+  DISCOUT2 <= 0;
+  #200
+
+  // PULSE BOTH NONINVERTING EDGECHECK4
+  #10 
+  SIGNAL_INPUT_CONFIG[0] = 1;
+  SIGNAL_INPUT_CONFIG[1] = 1;
+  SIGNAL_INPUT_CONFIG[2] = 0;
+  SIGNAL_INPUT_CONFIG[3] = 0;
+  SIGNAL_INPUT_CONFIG[4] = 1;
+  SIGNAL_INPUT_CONFIG[5] = 1;
+  #100  
+  DISCOUT1 <= 1;
+  DISCOUT2 <= 1;
+  #30
+  DISCOUT1 <= 0;
+  DISCOUT2 <= 0;
+  #400
+
+  // ENABLE PULSER
+  SIGNAL_INPUT_CONFIG[0] = 1;
+  SIGNAL_INPUT_CONFIG[1] = 1;
+  SIGNAL_INPUT_CONFIG[2] = 0;
+  SIGNAL_INPUT_CONFIG[3] = 0;
+  SIGNAL_INPUT_CONFIG[4] = 0;
+  SIGNAL_INPUT_CONFIG[5] = 0;
+  SIGNAL_INPUT_CONFIG[6] = 1;
+  SIGNAL_INPUT_CONFIG[7] = 0;
+  #40000
+
+  SIGNAL_INPUT_CONFIG[0] = 1;
+  SIGNAL_INPUT_CONFIG[1] = 1;
+  SIGNAL_INPUT_CONFIG[2] = 0;
+  SIGNAL_INPUT_CONFIG[3] = 0;
+  SIGNAL_INPUT_CONFIG[4] = 0;
+  SIGNAL_INPUT_CONFIG[5] = 0;
+  SIGNAL_INPUT_CONFIG[6] = 0;
+  SIGNAL_INPUT_CONFIG[7] = 1;
+  #40000
+  
+  SIGNAL_INPUT_CONFIG[0] = 0;
+  SIGNAL_INPUT_CONFIG[1] = 0;
+  SIGNAL_INPUT_CONFIG[2] = 0;
+  SIGNAL_INPUT_CONFIG[3] = 0;
+  SIGNAL_INPUT_CONFIG[4] = 0;
+  SIGNAL_INPUT_CONFIG[5] = 0;
+  SIGNAL_INPUT_CONFIG[6] = 0;
+  SIGNAL_INPUT_CONFIG[7] = 0;
+
+end
+
+endmodule

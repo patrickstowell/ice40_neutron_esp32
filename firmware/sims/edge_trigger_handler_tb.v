@@ -1,0 +1,124 @@
+`define SYNTHESIS
+`timescale 1ns / 1ps
+
+module edge_trigger_handler_tb();
+
+  initial
+  begin
+    $dumpfile("sims/edge_trigger_handler_tb.vcd");
+    $dumpvars(0,edge_trigger_handler_tb);
+    # 10000 $finish;
+  end
+
+  reg READ_MODE = 0;
+
+  wire CLK_SLOW;
+  wire RESET_SLOW;
+
+  wire CLK_FAST;
+  wire RESET_FAST;
+
+  CLOCK_HANDLER clock_handler(
+    CLK_SLOW,
+    RESET_SLOW,
+    CLK_FAST,
+    RESET_FAST
+  );
+
+  reg DISCOUT1;
+  reg DISCOUT2;
+  reg [2:0] SIGS;
+  reg [7:0] SIGNAL_INPUT_CONFIG;
+  // wire SIGNAL_LINE_1;
+  wire SIGNAL_LINE_1_GEN;
+  // wire SIGNAL_LINE_2;
+  wire SIGNAL_LINE_2_GEN;
+
+
+  SIGNAL_INPUT signal_input(
+    .CLK(CLK_FAST),
+    .SIGNAL1(DISCOUT1),
+    .SIGNAL2(DISCOUT2),
+    .SIGNAL_LINE_1(SIGNAL_LINE_1_GEN),
+    .SIGNAL_LINE_2(SIGNAL_LINE_2_GEN),
+    .read_mode(READ_MODE),
+    .mconfig(SIGNAL_INPUT_CONFIG)
+  );
+
+  wire SIGNAL_LINE_1 = SIGNAL_LINE_1_GEN;
+  wire SIGNAL_LINE_2 = SIGNAL_LINE_2_GEN;
+
+  reg [15:0] EDGE_TRIGGER_CONFIG = 0;
+  wire EDGE_TRIGGER;
+  EDGE_TRIGGER_HANDLER edge_trigger_handler (
+    .CLK(CLK_FAST),
+    .RESET(RESET_FAST),
+    .SIGNAL1(SIGNAL_LINE_1),
+    .SIGNAL2(SIGNAL_LINE_2),
+    .TRIGGER_OUT(EDGE_TRIGGER),
+    .read_mode(READ_MODE),
+    .mconfig(EDGE_TRIGGER_CONFIG)
+  );
+
+
+initial begin
+  
+  // ENABLE PULSER
+  SIGNAL_INPUT_CONFIG[0] = 1;
+  SIGNAL_INPUT_CONFIG[1] = 1;
+  SIGNAL_INPUT_CONFIG[2] = 0;
+  SIGNAL_INPUT_CONFIG[3] = 0;
+  SIGNAL_INPUT_CONFIG[4] = 0;
+  SIGNAL_INPUT_CONFIG[5] = 0;
+  SIGNAL_INPUT_CONFIG[6] = 1;
+  SIGNAL_INPUT_CONFIG[7] = 1;
+
+end
+
+
+initial begin
+
+  EDGE_TRIGGER_CONFIG[0] <= 0;
+  EDGE_TRIGGER_CONFIG[1] <= 0;
+  EDGE_TRIGGER_CONFIG[2] <= 0;
+  EDGE_TRIGGER_CONFIG[3] <= 0;
+  EDGE_TRIGGER_CONFIG[4] <= 0;
+  EDGE_TRIGGER_CONFIG[5] <= 0;
+  EDGE_TRIGGER_CONFIG[6] <= 0;
+  EDGE_TRIGGER_CONFIG[7] <= 0;
+  #40
+
+  // OR EITHER CHANNEL
+  EDGE_TRIGGER_CONFIG[0] <= 1;
+  EDGE_TRIGGER_CONFIG[1] <= 1;
+  EDGE_TRIGGER_CONFIG[2] <= 0;
+  # 100
+
+  // OR CHANNEL1
+  EDGE_TRIGGER_CONFIG[0] <= 1;
+  EDGE_TRIGGER_CONFIG[1] <= 0;
+  EDGE_TRIGGER_CONFIG[2] <= 0;
+  #200
+
+  // OR CHANNEL2
+  EDGE_TRIGGER_CONFIG[0] <= 0;
+  EDGE_TRIGGER_CONFIG[1] <= 1;
+  EDGE_TRIGGER_CONFIG[2] <= 0;
+  #200
+
+  // AND CHANNEL1+2
+  EDGE_TRIGGER_CONFIG[0] <= 1;
+  EDGE_TRIGGER_CONFIG[1] <= 1;
+  EDGE_TRIGGER_CONFIG[2] <= 1;
+  #200
+
+  // AND CHANNEL1+2 NON DEFAULT WINDOW
+  EDGE_TRIGGER_CONFIG[0] <= 1;
+  EDGE_TRIGGER_CONFIG[1] <= 1;
+  EDGE_TRIGGER_CONFIG[2] <= 1;
+
+
+
+end
+
+endmodule

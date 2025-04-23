@@ -1,0 +1,104 @@
+#set_io 3V33 1
+set_io EXTSPI_SS 2
+set_io EXTSPI_SDI 3
+set_io EXTSPI_SCK 4
+#set_io 1V2 5
+#set_io x 6
+#set_io CDONE 7
+#set_io RST 8
+#set_io x 9
+#set_io x 10
+#set_io x 11
+#set_io x 12
+
+set_io RGB2 41 
+set_io RGB1 40 
+set_io RGB0 39 
+set_io AMP_LDO_PIN 42 
+set_io BOARD_SCL 38 
+set_io DISCOUT1 43  # DISCOUT
+set_io PMT_LDO_PIN 36
+set_io 35 35 # EMPTY PAD
+set_io BOARD_SDA 37
+set_io PMT_SCL 34 
+set_io PMT_SDA 32 
+set_io CLKIN 31
+set_io ADDR8 28 
+set_io ADDR6 26 
+set_io ADDR7 27 
+set_io ADDR4 23 
+set_io ADDR5 25 
+#set_io SS 16 
+#set_io SCK 15 
+#set_io SDI 17 
+#set_io SDO 14 
+set_io 18 18 #EMPTY PAD
+set_io ADDR1 19
+set_io ADDR2 20
+set_io CLKFIN 13 #EMPTY PAD
+set_io ADDR3 21 
+set_io 12 12 #EMPTY PAD
+set_io 11 11 #EMPTY PAD
+set_io 10 10 #EMPTY PAD
+set_io  9 9 #EMPTY PAD
+set_io GPIOMCX2 6
+#set_io RST 8
+#set_io CDONE 7
+#set_io 3V31 22
+#set_io 3V32 33
+set_io DISC_SCL 45
+set_io EXTSPI_SDO 48
+set_io DISC_SDA 44
+set_io GPIOMCX1 47
+set_io DISCOUT2 46
+
+
+
+#set_io --warn-no-port GPIOMCX2 2
+#set_io --warn-no-port IO3 3
+#set_io  --warn-no-port GPIOMCX1 4
+#set_io --warn-no-port IO5 5
+#set_io --warn-no-port IO6 6
+#set_io --warn-no-port CDONE 7
+#set_io --warn-no-port RST 8
+#set_io --warn-no-port IO9 9
+#set_io --warn-no-port IO10 10
+#set_io -pullup yes --warn-no-port IO11 11
+#set_io --warn-no-port IO12 12
+#set_io -pullup yes --warn-no-port IO13 13
+
+#set_io --warn-no-port MOSI 17
+#set_io --warn-no-port SCK 15
+#set_io --warn-no-port SSEL 16
+#set_io --warn-no-port MISO 14
+#set_io --warn-no-port IO18 18
+#set_io --warn-no-port IO19 19
+#set_io --warn-no-port IO20 20
+#set_io --warn-no-port IO21 21
+#set_io --warn-no-port IO22 22
+#set_io --warn-no-port IO23 23
+#set_io --warn-no-port IO24 24
+#set_io -pullup yes --warn-no-port SCL 26
+#set_io -pullup yes --warn-no-port SDA 25
+#set_io --warn-no-port IO27 27
+#set_io --warn-no-port IO28 28
+#set_io --warn-no-port CLKIN 28
+#set_io --warn-no-port CLKFIN 30
+#set_io --warn-no-port IO31 31
+#set_io --warn-no-port IO32 32
+#set_io --warn-no-port CLKFIN 33
+#set_io --warn-no-port IO34 34
+#set_io --warn-no-port CLKIN 35
+#set_io -pullup yes --warn-no-port ENABLE5V 36
+#set_io --warn-no-port SIGNAL 37
+#set_io --warn-no-port IO38 38
+##set_io --warn-no-port IO39 39
+#set_io -pullup no --warn-no-port CLKFIN 40
+#set_io --warn-no-port IO41 41
+#set_io -pullup yes --warn-no-port CLKEN 42
+#set_io -pullup yes --warn-no-port IO43 43
+#set_io --warn-no-port CLK 44
+#set_io -pullup yes --warn-no-port IO45 45
+#set_io -pullup no --warn-no-port IO46 46
+#set_io --warn-no-port IO47 47
+#set_io --warn-no-port LED1 48
