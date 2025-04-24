@@ -18,6 +18,7 @@ namespace SDC {
     Serial.println(message);
 
     // DUMP Entire thing to disk with current timestamp straight away
+    return true;
   }
 
 }

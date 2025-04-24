@@ -22,6 +22,8 @@ namespace DEEPSLEEP {
   // }
 
   bool begin(){
+    Serial.println("Checking Deepsleep");
+    Serial.println(MEMORY::DEEPSLEEP_ENABLED);
     if (!MEMORY::DEEPSLEEP_ENABLED) return true;
     Serial.println("DeepSleep::begin()");
     // I2CPower.begin(I2C_SDA, I2C_SCL, 400000);

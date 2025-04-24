@@ -2,39 +2,78 @@
 #include <Wire.h>
 #include "module_memory.h"
 #include "module_iridium.h"
+#include "module_board.h"
+#include "esp_timer.h"
+
 
 namespace NEUTRON {
 
   #define I2C_SCL 21
   #define I2C_SDA 22
   #define I2C_SPEED 40000L
+  #define FPGA_I2C_ADDRESS 0x55
 
   void ConfigureFPGA(){
-    bus.write_byte_data(FPGA_I2C_ADDRESS, 0x01, MEMORY::NEUTRON_I2C_BYTE01);
-    bus.write_byte_data(FPGA_I2C_ADDRESS, 0x02, MEMORY::NEUTRON_I2C_BYTE02);
-    bus.write_byte_data(FPGA_I2C_ADDRESS, 0x03, MEMORY::NEUTRON_I2C_BYTE03);
-    bus.write_byte_data(FPGA_I2C_ADDRESS, 0x04, MEMORY::NEUTRON_I2C_BYTE04);
-    bus.write_byte_data(FPGA_I2C_ADDRESS, 0x05, MEMORY::NEUTRON_I2C_BYTE05);
-    bus.write_byte_data(FPGA_I2C_ADDRESS, 0x06, MEMORY::NEUTRON_I2C_BYTE06);
-    bus.write_byte_data(FPGA_I2C_ADDRESS, 0x07, MEMORY::NEUTRON_I2C_BYTE07);
-    bus.write_byte_data(FPGA_I2C_ADDRESS, 0x08, MEMORY::NEUTRON_I2C_BYTE08);
-    bus.write_byte_data(FPGA_I2C_ADDRESS, 0x09, MEMORY::NEUTRON_I2C_BYTE09);
-    bus.write_byte_data(FPGA_I2C_ADDRESS, 0x0A, MEMORY::NEUTRON_I2C_BYTE0A);
-    bus.write_byte_data(FPGA_I2C_ADDRESS, 0x0B, MEMORY::NEUTRON_I2C_BYTE0B);
-    bus.write_byte_data(FPGA_I2C_ADDRESS, 0x0C, MEMORY::NEUTRON_I2C_BYTE0C);
-    bus.write_byte_data(FPGA_I2C_ADDRESS, 0x0D, MEMORY::NEUTRON_I2C_BYTE0D);
-    bus.write_byte_data(FPGA_I2C_ADDRESS, 0x0E, MEMORY::NEUTRON_I2C_BYTE0E);
-    bus.write_byte_data(FPGA_I2C_ADDRESS, 0x0F, MEMORY::NEUTRON_I2C_BYTE0F);
-    bus.write_byte_data(FPGA_I2C_ADDRESS, 0x10, MEMORY::NEUTRON_I2C_BYTE10);
-    bus.write_byte_data(FPGA_I2C_ADDRESS, 0x11, MEMORY::NEUTRON_I2C_BYTE11);
-    bus.write_byte_data(FPGA_I2C_ADDRESS, 0x12, MEMORY::NEUTRON_I2C_BYTE12);
-    bus.write_byte_data(FPGA_I2C_ADDRESS, 0x13, MEMORY::NEUTRON_I2C_BYTE13);
-    bus.write_byte_data(FPGA_I2C_ADDRESS, 0x14, MEMORY::NEUTRON_I2C_BYTE14);
-    bus.write_byte_data(FPGA_I2C_ADDRESS, 0x15, MEMORY::NEUTRON_I2C_BYTE15);
-    bus.write_byte_data(FPGA_I2C_ADDRESS, 0x16, MEMORY::NEUTRON_I2C_BYTE16);
-    bus.write_byte_data(FPGA_I2C_ADDRESS, 0x17, MEMORY::NEUTRON_I2C_BYTE17);
-    bus.write_byte_data(FPGA_I2C_ADDRESS, 0x18, MEMORY::NEUTRON_I2C_BYTE18);
-    bus.write_byte_data(FPGA_I2C_ADDRESS, 0x19, MEMORY::NEUTRON_I2C_BYTE19);
+    Serial.println("Starting NEUTRON CHECKS");
+    // Enter Configure
+    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x20, 1);
+
+    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x01, MEMORY::NEUTRON_I2C_BYTE01);
+    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x02, MEMORY::NEUTRON_I2C_BYTE02);
+    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x03, MEMORY::NEUTRON_I2C_BYTE03);
+    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x04, MEMORY::NEUTRON_I2C_BYTE04);
+    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x05, MEMORY::NEUTRON_I2C_BYTE05);
+    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x06, MEMORY::NEUTRON_I2C_BYTE06);
+    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x07, MEMORY::NEUTRON_I2C_BYTE07);
+    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x08, MEMORY::NEUTRON_I2C_BYTE08);
+    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x09, MEMORY::NEUTRON_I2C_BYTE09);
+    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x0A, MEMORY::NEUTRON_I2C_BYTE0A);
+    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x0B, MEMORY::NEUTRON_I2C_BYTE0B);
+    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x0C, MEMORY::NEUTRON_I2C_BYTE0C);
+    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x0D, MEMORY::NEUTRON_I2C_BYTE0D);
+    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x0E, MEMORY::NEUTRON_I2C_BYTE0E);
+    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x0F, MEMORY::NEUTRON_I2C_BYTE0F);
+    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x10, MEMORY::NEUTRON_I2C_BYTE10);
+    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x11, MEMORY::NEUTRON_I2C_BYTE11);
+    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x12, MEMORY::NEUTRON_I2C_BYTE12);
+    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x13, MEMORY::NEUTRON_I2C_BYTE13);
+    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x14, MEMORY::NEUTRON_I2C_BYTE14);
+    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x15, MEMORY::NEUTRON_I2C_BYTE15);
+    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x16, MEMORY::NEUTRON_I2C_BYTE16);
+    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x17, MEMORY::NEUTRON_I2C_BYTE17);
+    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x18, MEMORY::NEUTRON_I2C_BYTE18);
+    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x19, MEMORY::NEUTRON_I2C_BYTE19);
+
+    Serial.println("NEUTRON CONFIG");
+    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x01));
+    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x02));
+    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x03));
+    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x04));
+    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x05));
+    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x06));
+    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x07));
+    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x08));
+    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x09));
+    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x0A));
+    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x0B));
+    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x0C));
+    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x0D));
+    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x0E));
+    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x0F));
+    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x10));
+    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x11));
+    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x12));
+    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x13));
+    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x14));
+    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x15));
+    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x16));
+    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x17));
+    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x18));
+    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x19));
+
+    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x20, 0);
+
+
   }
 
   bool begin() {
@@ -42,7 +81,7 @@ namespace NEUTRON {
 
     // Setup I2C
     Wire.begin(I2C_SCL, I2C_SDA);
-    Wire.setSpeed(I2C_SPEED);
+    // Wire.setSpeed(I2C_SPEED);
 
     // Set FPGA Settings
     return true;
@@ -53,16 +92,22 @@ namespace NEUTRON {
     if (!MEMORY::NEUTRON_ENABLED) return true;
     
     // Check Current Exposure
-    double exposure = time() - MEMORY::NEUTRON_START;
+    int64_t time_since_startup = esp_timer_get_time();
+
+    double exposure = time_since_startup - MEMORY::NEUTRON_START;
+
+    // Serial.println("EXPOSURE");
+    // Serial.println(exposure);
+    // Serial.println(MEMORY::NEUTRON_EXPOSURE);
 
     // Check Exposure or Run End Break
-    if (exposure < MEMORY::NEUTRON_EXPOSURE && !MEMORY::NEUTRON_STOP){
+    if (exposure < MEMORY::NEUTRON_EXPOSURE*1000000 && !MEMORY::NEUTRON_STOP){
       return true;
     }
 
     // Register STOP
-    MEMORY::RUN_STOP = false;
-    stop_time = time();
+    MEMORY::NEUTRON_STOP = false;
+    int64_t stop_time = time_since_startup;
     
     // Get N Neutrons
     // Get Histogram
@@ -74,15 +119,18 @@ namespace NEUTRON {
 
     // Queue the Message
     SDC::queue(message);
-    SIM::queue(message);
-    SAT::queue(message);
+    // SIM::queue(message);
+    // SAT::queue(message);
 
     // Upload FPGA Settings
 
     // Clear Buffers
 
     // Start a RUN
-    MEMORY::NEUTRON_START = time();
+    Serial.println("NEUTRON::handle() - Starting run.");
+    MEMORY::NEUTRON_START = esp_timer_get_time();
+    Serial.println("NEUTRON::handle() - Finished.");
+
     return true;
   }
   
