@@ -1,6 +1,7 @@
 #include "module_watchdog.h"
 #include "module_ota.h"
 #include "module_memory.h"
+#include "module_config.h"
 #include "module_deepsleep.h"
 #include "module_server.h"
 #include "module_sdcard.h"

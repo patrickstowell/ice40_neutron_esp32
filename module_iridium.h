@@ -1,5 +1,5 @@
 #pragma once
-#include "module_memory.h"
+#include "module_config.h"
 
 namespace SAT {
 

@@ -39,3 +39,15 @@ namespace I2C {
 
 };
 
+
+namespace BOARD {
+namespace SPI1 {
+
+}
+}
+
+
+
+
+
+

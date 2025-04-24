@@ -1,10 +1,26 @@
 #pragma once
-#include "module_memory.h"
+#include "module_config.h"
+
+#include <SPI.h>
+#include <SdFat.h>
 
 namespace SDC {
 
-  bool begin(){
-    // Try to open SD Card, if it doesn't, set the current config to disabled and print warning message
+  SdFat sd;
+  FsFile dataFile;
+  SPIClass spi = SPIClass(VSPI);
+
+  #define SD_CS 5
+  #define SPI_SPEED SD_SCK_MHZ(20)
+
+  bool begin() {
+    if (!CONFIG::SD_ENABLED) return true;
+
+    if (!sd.begin(SD_CS, spi, SPI_SPEED)) {
+      STATUS::SD_FOUND = false;
+      return false;
+    }
+
     return true;
   }
 

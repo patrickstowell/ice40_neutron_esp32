@@ -1,15 +1,16 @@
 #pragma once
 #include <WiFi.h>
 #include <ArduinoOTA.h>
-#include "module_memory.h"
+#include "module_config.h"
+
 namespace OTA {
 
     bool begin() {
-        if (!MEMORY::OTA_ENABLED) return true;
+        if (!CONFIG::OTA_ENABLED) return true;
 
         // Create the Access Point
-        if (MEMORY::WIFI_ENABLED) {
-            WiFi.softAP(MEMORY::WIFI_SSID, MEMORY::WIFI_PSWD);
+        if (CONFIG::WIFI_ENABLED) {
+            WiFi.softAP(CONFIG::WIFI_SSID, CONFIG::WIFI_PSWD);
             Serial.println("Access Point Started");
             Serial.print("AP IP address: ");
             Serial.println(WiFi.softAPIP());
@@ -48,7 +49,7 @@ namespace OTA {
     }
 
     bool handle() {
-        if (MEMORY::OTA_ENABLED) ArduinoOTA.handle();
+        if (CONFIG::OTA_ENABLED) ArduinoOTA.handle();
         return true;
     }
 

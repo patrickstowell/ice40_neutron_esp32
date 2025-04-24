@@ -26,7 +26,7 @@ namespace SERVER {
     // }
 
     bool begin() {
-        if (!MEMORY::SERVER_ENABLED) return true;
+        if (!CONFIG::SERVER_ENABLED) return true;
         // server = new AsyncWebServer(80);
         // WebSerial.begin(server);
         // WebSerial.msgCallback(recvMsg);
@@ -35,7 +35,7 @@ namespace SERVER {
     }
 
     bool handle() {
-        if (!MEMORY::SERVER_ENABLED) return true;
+        if (!CONFIG::SERVER_ENABLED) return true;
         // WebSerial.println("Hello!");
         // delay(1000);
         return true;
