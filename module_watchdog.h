@@ -1,12 +1,16 @@
+#pragma once
 #include <esp_task_wdt.h>
 
-#define WDT_TIMEOUT 1
+#define WDT_TIMEOUT 15000
+
+esp_task_wdt_config_t wdt_config;
 
 void WD_START() {
-  // esp_task_wdt_init(WDT_TIMEOUT, true);
-  // esp_task_wdt_add(NULL);
+  wdt_config.timeout_ms = WDT_TIMEOUT;
+  esp_task_wdt_init(&wdt_config);
+  esp_task_wdt_add(NULL);
 }
 
 void WD(bool okay) {
-    // if (okay) esp_task_wdt_reset();
+  if (okay) esp_task_wdt_reset();
 }

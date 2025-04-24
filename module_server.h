@@ -1,39 +1,44 @@
-class module_webserver {
-private:
-    WebServer server{80};
-    bool ledState = false;
+// #include <WiFi.h>
+// #include "module_memory.h"
+// #include <Arduino.h>
+// #include <WiFi.h>
+// #include <AsyncTCP.h>
+// #include <ESPAsyncWebServer.h>
+// #include <WebSerial.h>
 
-public:
+namespace SERVER {
+
+    // AsyncWebServer* server;//(80);
+
+    // void recvMsg(uint8_t *data, size_t len){
+    //     WebSerial.println("Received Data...");
+    //     String d = "";
+    //     for(int i=0; i < len; i++){
+    //         d += char(data[i]);
+    //     }
+    //     WebSerial.println(d);
+    //     if (d == "ON"){
+    //         Serial.println("ON");
+    //     }
+    //     if (d=="OFF"){
+    //         Serial.println("OFF");
+    //     }
+    // }
+
     bool begin() {
-        server.on("/", [this]() {
-            String html = "<html><head><title>ESP32 Control</title></head><body>";
-            html += "<h1>ESP32 Control Panel</h1>";
-            html += "<p>LED is " + String(ledState ? "ON" : "OFF") + "</p>";
-            html += "<form method='GET' action='/toggle'><button type='submit'>Toggle LED</button></form>";
-            html += "</body></html>";
-            server.send(200, "text/html", html);
-        });
-
-        server.on("/toggle", [this]() {
-            ledState = !ledState;
-            Serial.println("LED State toggled: " + String(ledState ? "ON" : "OFF"));
-            server.sendHeader("Location", "/", true);
-            server.send(302, "text/plain", "");
-        });
-
-        server.begin();
-        Serial.println("Web server started");
+        if (!MEMORY::SERVER_ENABLED) return true;
+        // server = new AsyncWebServer(80);
+        // WebSerial.begin(server);
+        // WebSerial.msgCallback(recvMsg);
+        // server->begin();
         return true;
     }
 
     bool handle() {
-        server.handleClient();
+        if (!MEMORY::SERVER_ENABLED) return true;
+        // WebSerial.println("Hello!");
+        // delay(1000);
         return true;
     }
 
-    bool getLEDState() const {
-        return ledState;
-    }
-};
-
-module_webserver WEB;
+}

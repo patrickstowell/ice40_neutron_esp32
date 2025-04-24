@@ -1,19 +1,19 @@
+#pragma once
 #include <WiFi.h>
 #include <ArduinoOTA.h>
+#include "module_memory.h"
+namespace OTA {
 
-// Access Point credentials
-const char* ssid = "ESP32_NEUTRON";
-const char* password = "neutrons2025";
-
-class module_ota {
-public:
     bool begin() {
+        if (!MEMORY::OTA_ENABLED) return true;
 
         // Create the Access Point
-        WiFi.softAP(ssid, password);
-        Serial.println("Access Point Started");
-        Serial.print("AP IP address: ");
-        Serial.println(WiFi.softAPIP());
+        if (MEMORY::WIFI_ENABLED) {
+            WiFi.softAP(MEMORY::WIFI_SSID, MEMORY::WIFI_PSWD);
+            Serial.println("Access Point Started");
+            Serial.print("AP IP address: ");
+            Serial.println(WiFi.softAPIP());
+        }
 
         // OTA Setup
         ArduinoOTA
@@ -43,15 +43,15 @@ public:
 
         ArduinoOTA.begin();
         Serial.println("OTA Ready");
+
         return true;
     }
 
-
     bool handle() {
-        ArduinoOTA.handle();
+        if (MEMORY::OTA_ENABLED) ArduinoOTA.handle();
         return true;
     }
 
 };
 
-module_ota OTA;
+// static module_ota OTA;

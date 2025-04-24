@@ -2,40 +2,21 @@
 #include "module_ota.h"
 #include "module_memory.h"
 #include "module_deepsleep.h"
+#include "module_server.h"
+#include "module_sdcard.h"
+#include "module_iridium.h"
 
-
-void process() {
-
-  WD( MEMORY.begin() );
-  WD( OTA.begin() );
-  WD( SERVER.begin() );
-  WD( DEEPSLEEP.begin() );
-
-  WD( MEMORY.handle() );
-  WD( OTA.handle() );
-  WD( SERVER.begin() );
-  WD( DEEPSLEEP.handle() );
-  
-}
-
-
-void setup() {
-
-  Serial.begin(115200);
-  Serial.println("Booting");
-
-  WD_START();
 
   // EACH HANDLE NEEDS TO CHECK SYSTEM TIME
   // IF IT HAS BEEN THEN IT RUNS THE JOB USING TASK
   // IF IT ISN'T THEN IT JUST RETURNS TRUE.
 
   // CONFIG
-  // - MEMORY
-  // - SERVER
+  // - MEMORY X
+  // - SERVER X
 
   // DATA
-  // - NEUTRON
+  // - NEUTRON X
   // - BME280
   // - SDI12
   // - I2C
@@ -44,16 +25,46 @@ void setup() {
   // QUEUE
 
   // TRANSMIT
-  // - SDCARD
+  // - SDCARD X
   // - SIM800
-  // - IRIDIUM
+  // - IRIDIUM X
 
-  // DEEPSLEEP (OPTIONAL)
+  // DEEPSLEEP (OPTIONAL) X
+  // process();
+
+void begin_all() {
+
+  WD( MEMORY::begin() );
+  WD( OTA::begin() );
+  WD( SERVER::begin() );
+  WD( DEEPSLEEP::begin() );
 
 }
 
+void handle_all() {
+
+  WD( MEMORY::handle() );
+  WD( OTA::handle() );
+  WD( SERVER::handle() );
+  WD( DEEPSLEEP::handle() );
+  
+}
+
+
+void setup() {
+  WD_START();
+
+  delay(1000);
+
+  Serial.begin(115200);
+  Serial.println("ESP32: Booting");
+
+  begin_all();
+  handle_all();
+}
+
 void loop() {
-  process();
+  handle_all();
 }
 
 
