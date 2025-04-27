@@ -1,5 +1,8 @@
+#pragma once
 
 #include "fw.h"
+
+namespace FLASH {
 
 #define OP_BYTE_OR_PAGE_PROGRAM (0x02)
 #define OP_READ_ARRAY_03 (0x03)
@@ -350,6 +353,8 @@ void flash_fpga() {
   Serial.print("] - Errors : ");
   Serial.println(errorcounts);
   ice40_release_flashbitbang();
+}
+
 }
 
 

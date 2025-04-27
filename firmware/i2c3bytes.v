@@ -38,10 +38,20 @@ module I2C4BYTES(
     localparam sdahigh = 4'b1111;
     localparam sdalow = 4'b0000;
 
+    wire module0_active = 0; //(bits_to_send > 0) & I2CLINES[0];
+    wire module1_active = (bits_to_send > 0); // & I2CLINES[1];
+                           
     assign SCLLINES[0] = (bits_to_send > 0) & I2CLINES[0] & ~scl_current[167];
     assign SDALINES[0] = (bits_to_send > 0) & I2CLINES[0] & ~sda_current[167];
     assign SCLLINES[1] = (bits_to_send > 0) & I2CLINES[1] & ~scl_current[167];
     assign SDALINES[1] = (bits_to_send > 0) & I2CLINES[1] & ~sda_current[167];
+
+                           
+    // assign SCLLINES[0] = (module0_active & ~scl_current[167]) | !module0_active;
+    // assign SDALINES[0] = (module0_active & ~sda_current[167]) | !module0_active;
+    // assign SCLLINES[1] = (module1_active & ~scl_current[167]) | !module1_active;
+    // assign SDALINES[1] = (module1_active & ~sda_current[167]) | !module1_active;
+
 
     reg [14:0] clkcounter = 0;
     wire I2CCLK = clkcounter[14];

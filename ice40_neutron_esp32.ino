@@ -7,6 +7,8 @@
 #include "module_sdcard.h"
 #include "module_iridium.h"
 #include "module_neutron.h"
+#include "module_serial.h"
+#include "flash_module.h"
 
   // EACH HANDLE NEEDS TO CHECK SYSTEM TIME
   // IF IT HAS BEEN THEN IT RUNS THE JOB USING TASK
@@ -34,7 +36,15 @@
 
 void begin_all() {
 
+  if (CONFIG::BOOT_COUNT == 0) FLASH::flash_fpga();
+  WD( NEUTRON::begin() );
+
+  I2C2::begin();
+  return;
+
+
   // Configurations
+  WD( MSERIAL::begin() );
   WD( MEMORY::begin() );
   WD( OTA::begin() );
   WD( SERVER::begin() );
@@ -48,6 +58,7 @@ void begin_all() {
   // Transmitters
   WD( SDC::begin() );
   // WD( SIM::begin() );
+
   WD( SAT::begin() );
 
   // Sleeper
@@ -56,8 +67,11 @@ void begin_all() {
 
 
 void handle_all() {
+  WD( NEUTRON::handle() );
 
+  return; //
   // Configurations
+  WD( MSERIAL::handle() );
   WD( MEMORY::handle() );
   WD( OTA::handle() );
   WD( SERVER::handle() );
@@ -72,6 +86,10 @@ void handle_all() {
   WD( SDC::handle() );
   // WD( SIM::handle() );
   WD( SAT::handle() );
+
+// Every 24 hours run a hard reset.
+// If no data from the Neutron probe run a hard reset.
+// If no 
 
   // Sleeper
   WD( DEEPSLEEP::handle() );

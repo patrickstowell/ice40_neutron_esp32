@@ -42,6 +42,7 @@ for line in open("module_config.h"):
   nam = nam.replace("int ","")
   nam = nam.replace("uint8_t","")
   nam = nam.replace("String", "")
+  nam = nam.replace("uint16_t", "")
   nam = nam.replace(";", "")
   nam = nam.split("=")[0].strip()
   
@@ -89,13 +90,10 @@ for i in range(len(varlist)):
   vhash = hash6_base64(nam + var)
   toconv = ""
 
-
-sdadsa DONT NEED TO PUT TO EEPROM, JUST CHANGE LOCALLY, and HAVE A COMMAND TO UPDATE EEPROM AFTERWARDS? OR MODIFY BOTH.
-
   if i == 0:
-    f.write(f"    if(parts[0] == F(\"{nam}\")) eeprom.put{var}((\"{vhash}\"), parts[1].to{var}());\n")
+    f.write(f"    if(parts[0] == F(\"{nam}\")) {nam} = parts[1].to{var}());\n")
   else:
-    f.write(f"    else if(parts[0] == F(\"{nam}\")) eeprom.put{var}((\"{vhash}\"), parts[1].to{var}());\n")
+    f.write(f"    else if(parts[0] == F(\"{nam}\")) {nam} = parts[1].to{var}());\n")
 
 
 f.write("  return\n")

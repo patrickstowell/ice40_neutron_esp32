@@ -3,7 +3,40 @@
 #pragma once
 
 
+namespace I2C2 {
+  //Set pins for I2C2
+  #define I2C2_SDA_PIN 32
+  #define I2C2_SCL_PIN 33
+
+  TwoWire bus = TwoWire(1); //I2C2 bus
+  int i = 0;
+  void onRequest() {
+    bus.print(i++);
+    bus.print(" Packets.");
+    Serial.println("onRequest");
+    Serial.println(i);
+  }
+
+void onReceive(int len) {
+  Serial.printf("onReceive[%d]: ", len);
+  while (bus.available()) {
+    Serial.print(bus.read(), DEC);
+  }
+  Serial.println();
+}
+
+void begin() {
+  Serial.println("Starting TwoWire Interface");
+  bus.onReceive(onReceive);
+  bus.onRequest(onRequest);
+  bus.setPins(I2C2_SDA_PIN, I2C2_SCL_PIN);
+  bus.begin(0x55);
+}
+
+}
+
 namespace I2C {
+
 
   bool active = false;
   void begin(){
@@ -14,6 +47,13 @@ namespace I2C {
   }
 
   uint8_t write_byte_data(byte index, byte addr, byte val){
+    Serial.print("Sending : ");
+    Serial.print(index);
+    Serial.print(" : ");
+    Serial.print(addr);
+    Serial.print(" : ");
+    Serial.println(val);
+
     Wire.beginTransmission(index); // transmit to device #4
     // delay(50);
     Wire.write(addr); // sends five bytes

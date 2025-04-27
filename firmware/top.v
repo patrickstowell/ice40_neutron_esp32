@@ -4,9 +4,9 @@
 //`include "wb_filter.v"
 module TOP (
   output GPIOMCX1,
-  output DISC_SDA,
+  inout DISC_SDA,
   output DISC_SCL,
-  output PMT_SDA,
+  inout PMT_SDA,
   output PMT_SCL,
   inout BOARD_SDA,
   input BOARD_SCL,              
@@ -102,7 +102,7 @@ module TOP (
 
   SB_GB BUFFERED_CLK_SLOW(.USER_SIGNAL_TO_GLOBAL_BUFFER(CLK_SLOW_HALF_GEN[1]),
                           .GLOBAL_BUFFER_OUTPUT(CLK_SLOW) );
-
+    wire CLK_SLOW_HALF_GEN_OUT = CLK_SLOW_HALF_GEN[1];
 
   ///////////////////////////////////////////////////////////////////////////
   // SIGNAL INPUT SELECTION
@@ -135,7 +135,7 @@ module TOP (
   // EDGE COINCIDENCE TRIGGER
   ///////////////////////////////////////////////////////////////////////////
   wire EDGE_TRIGGER;
-  reg [15:0] EDGE_TRIGGER_CONFIG;
+    reg [7:0] EDGE_TRIGGER_CONFIG;
 
   EDGE_TRIGGER_HANDLER edge_trigger_handler (
     .CLK(CLK_FAST),
@@ -144,7 +144,7 @@ module TOP (
     .SIGNAL2(SIGNAL_LINE_2),
     .TRIGGER_OUT(EDGE_TRIGGER),
     .read_mode(READ_MODE),
-    .mconfig(EDGE_TRIGGER_CONFIG)
+    .EDGE_TRIGGER_CONFIG(EDGE_TRIGGER_CONFIG)
   );
 
   ///////////////////////////////////////////////////////////////////////////
@@ -346,15 +346,29 @@ module TOP (
  //////////////////////////////
  // DAC CONTROL MASTER
  //////////////////////////////
- wire [1:0] scllines = {
-    DISC_SCL,
-    PMT_SCL
-  };
-  wire [1:0] sdalines = {
-    DISC_SDA,
-    PMT_SDA
-  };
+    // assign PMT_SCL = BOARD_SCL;
+    // assign PMT_SDA = BOARD_SDA;
 
+    assign PMT_SCL = scllines[0];
+    assign PMT_SDA = sdalines[0];
+    
+    wire [1:0] scllines; 
+    //= {
+    // DISC_SCL,
+    // PMT_SCL
+  // };
+    wire [1:0] sdalines;
+    // = {
+    // DISC_SDA,
+    // PMT_SDA
+  // };
+
+  // assign sdalines[0] = 1;
+  // assign sdalines[1] = 1;
+    
+  // assign scllines[0] = 1;
+  // assign scllines[1] = 1;
+    
 
   // wire DACEEPROM;
   // wire DACACTIVE;
@@ -369,8 +383,8 @@ module TOP (
   wire [15:0] DAC_CURRENT_DATA;
 
   wb_hv hvinterface (
-    .clk_i(CLK_SLOW),
-    .rst_i(RESET_SLOW),
+      .clk_i(CLK_FAST),
+      .rst_i(RESET_FAST),
 
     .DAC_CONTROL_CONFIG(DAC_CONTROL_CONFIG),
     .DAC_CURRENT_DATA(DAC_CURRENT_DATA),
@@ -384,7 +398,7 @@ module TOP (
 //   ///////////////////////////////////////////////////////////////////////////
 //   // I2C COMMAND INTERFACE
 //   ///////////////////////////////////////////////////////////////////////////
-  i2cnew i2c_handler(
+  i2c_control i2c_handler(
     .SCL(BOARD_SCL), 
     .SDA(BOARD_SDA),
     .RST(RESET_SLOW),

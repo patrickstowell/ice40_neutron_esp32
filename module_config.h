@@ -61,13 +61,21 @@ namespace CONFIG {
     RTC_DATA_ATTR bool GPS_FOUND = true;
     RTC_DATA_ATTR bool SD_ENABLED = true;
 
-    RTC_DATA_ATTR uint16_t HVTARGET = 1200;
-    RTC_DATA_ATTR uint16_t HVLIMIT = 1200;
-    RTC_DATA_ATTR uint16_t RAMPSPEED = 1200;
-    RTC_DATA_ATTR uint16_t THRESHOLD1 = 200;
-    RTC_DATA_ATTR uint16_t THRESHOLD2 = 200;
-    RTC_DATA_ATTR uint8_t EEPROMCHOICE = 3;
+    RTC_DATA_ATTR uint16_t HVTARGET = 2000; // EEPROM
+    RTC_DATA_ATTR uint16_t HVLIMIT = 2000; // EEPROM
+    RTC_DATA_ATTR uint16_t RAMPSPEED = 10; // EEPROM
+    RTC_DATA_ATTR uint16_t THRESHOLD1 = 500; // EEPROM
+    RTC_DATA_ATTR uint16_t THRESHOLD2 = 500; // EEPROM
+    RTC_DATA_ATTR uint8_t EEPROMCHOICE = 3; // EEPROM
 
+    RTC_DATA_ATTR bool enable_ch1 = 0; // EEPROM
+    RTC_DATA_ATTR bool enable_ch2 = 0;// EEPROM
+    RTC_DATA_ATTR bool invertlogic_ch1 = 0; // EEPROM
+    RTC_DATA_ATTR bool invertlogic_ch2 = 0; // EEPROM
+    RTC_DATA_ATTR bool edgeonly_ch1 = 0; // EEPROM
+    RTC_DATA_ATTR bool edgeonly_ch2 = 0; // EEPROM
+    RTC_DATA_ATTR bool pulser_ch1 = 0; // EEPROM
+    RTC_DATA_ATTR bool pulser_ch2 = 0; // EEPROM
 
 };
 

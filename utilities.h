@@ -16,3 +16,25 @@ void splitMessage(const String& message, String parts[], int maxParts) {
     parts[partIndex++] = message.substring(start);
   }
 }
+
+
+
+class check_timer {
+  public:
+  check_timer(uint64_t check, uint64_t* store){
+    fCheckTime = check;
+    fStore = store;
+  }
+
+  bool check(){
+    if ((*fStore) - esp_timer_get_time() > fCheckTime) {
+      (*fStore) += fCheckTime;
+      return true;
+    }
+    return false;
+  }
+
+  uint64_t* fStore;
+  uint64_t fCheckTime;
+};
+

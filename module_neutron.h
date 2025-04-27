@@ -20,6 +20,20 @@ namespace NEUTRON {
     // Enter Config Mode
     I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x20, 1);
 
+    // SIGNAL INPUT CONFIG
+    uint8_t SIGNAL_INPUT_CONFIG = 0;
+    SIGNAL_INPUT_CONFIG |= (CONFIG::enable_ch1 << 0);
+    SIGNAL_INPUT_CONFIG |= (CONFIG::enable_ch2 << 1);
+    SIGNAL_INPUT_CONFIG |= (CONFIG::invertlogic_ch1 << 2);
+    SIGNAL_INPUT_CONFIG |= (CONFIG::invertlogic_ch1 << 3);
+    SIGNAL_INPUT_CONFIG |= (CONFIG::edgeonly_ch1 << 4);
+    SIGNAL_INPUT_CONFIG |= (CONFIG::edgeonly_ch1 << 5);
+    SIGNAL_INPUT_CONFIG |= (CONFIG::pulser_ch1 << 6);
+    SIGNAL_INPUT_CONFIG |= (CONFIG::pulser_ch1 << 7);
+    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x01, SIGNAL_INPUT_CONFIG);
+
+
+
     // BUILD DAC MODULE CONFIG
     uint8_t DAC_CONTROL_CONFIG_BYTE0 = ((CONFIG::HVTARGET >> 0) & 0xFF);
     uint8_t DAC_CONTROL_CONFIG_BYTE1 = ((CONFIG::HVTARGET >> 8) & 0xFF);
@@ -48,36 +62,36 @@ namespace NEUTRON {
     I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x0F, DAC_CONTROL_CONFIG_BYTE0);
 
 
-    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x01, CONFIG::NEUTRON_I2C_BYTE01);
-    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x02, CONFIG::NEUTRON_I2C_BYTE02);
-    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x03, CONFIG::NEUTRON_I2C_BYTE03);
-    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x04, CONFIG::NEUTRON_I2C_BYTE04);
-    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x05, CONFIG::NEUTRON_I2C_BYTE05);
-    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x06, CONFIG::NEUTRON_I2C_BYTE06);
-    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x07, CONFIG::NEUTRON_I2C_BYTE07);
-    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x08, CONFIG::NEUTRON_I2C_BYTE08);
-    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x09, CONFIG::NEUTRON_I2C_BYTE09);
-    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x0A, CONFIG::NEUTRON_I2C_BYTE0A);
-    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x0B, CONFIG::NEUTRON_I2C_BYTE0B);
-    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x0C, CONFIG::NEUTRON_I2C_BYTE0C);
-    I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x0D, CONFIG::NEUTRON_I2C_BYTE0D);
+    // I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x01, CONFIG::NEUTRON_I2C_BYTE01);
+    // I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x02, CONFIG::NEUTRON_I2C_BYTE02);
+    // I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x03, CONFIG::NEUTRON_I2C_BYTE03);
+    // I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x04, CONFIG::NEUTRON_I2C_BYTE04);
+    // I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x05, CONFIG::NEUTRON_I2C_BYTE05);
+    // I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x06, CONFIG::NEUTRON_I2C_BYTE06);
+    // I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x07, CONFIG::NEUTRON_I2C_BYTE07);
+    // I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x08, CONFIG::NEUTRON_I2C_BYTE08);
+    // I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x09, CONFIG::NEUTRON_I2C_BYTE09);
+    // I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x0A, CONFIG::NEUTRON_I2C_BYTE0A);
+    // I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x0B, CONFIG::NEUTRON_I2C_BYTE0B);
+    // I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x0C, CONFIG::NEUTRON_I2C_BYTE0C);
+    // I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x0D, CONFIG::NEUTRON_I2C_BYTE0D);
     
 
     Serial.println("NEUTRON CONFIG");
-    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x01));
-    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x02));
-    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x03));
-    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x04));
-    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x05));
-    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x06));
-    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x07));
-    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x08));
-    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x09));
-    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x0A));
-    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x0B));
-    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x0C));
-    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x0D));
-    Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x0E));
+    // Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x01));
+    // Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x02));
+    // Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x03));
+    // Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x04));
+    // Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x05));
+    // Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x06));
+    // Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x07));
+    // Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x08));
+    // Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x09));
+    // Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x0A));
+    // Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x0B));
+    // Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x0C));
+    // Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x0D));
+    // Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x0E));
     Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x0F));
     Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x10));
     Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x11));
@@ -89,6 +103,7 @@ namespace NEUTRON {
     Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x17));
     Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x18));
     Serial.println(I2C::read_byte_data(FPGA_I2C_ADDRESS, 0x19));
+    
 
     I2C::write_byte_data(FPGA_I2C_ADDRESS, 0x20, 0);
 

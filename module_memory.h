@@ -6,7 +6,7 @@ using namespace CONFIG;
 
 namespace MEMORY {
   Preferences eeprom;
-  void Print() {
+  void PrintEEPROM() {
     Serial.print("APN_NAME : ");
     Serial.println(APN_NAME);
     Serial.print("USER_NAME : ");
@@ -35,6 +35,34 @@ namespace MEMORY {
     Serial.println(WATCHDOG_ENABLED);
     Serial.print("GPS_ENABLED : ");
     Serial.println(GPS_ENABLED);
+    Serial.print("HVTARGET : ");
+    Serial.println(HVTARGET);
+    Serial.print("HVLIMIT : ");
+    Serial.println(HVLIMIT);
+    Serial.print("RAMPSPEED : ");
+    Serial.println(RAMPSPEED);
+    Serial.print("THRESHOLD1 : ");
+    Serial.println(THRESHOLD1);
+    Serial.print("THRESHOLD2 : ");
+    Serial.println(THRESHOLD2);
+    Serial.print("EEPROMCHOICE : ");
+    Serial.println(EEPROMCHOICE);
+    Serial.print("enable_ch1 : ");
+    Serial.println(enable_ch1);
+    Serial.print("enable_ch2 : ");
+    Serial.println(enable_ch2);
+    Serial.print("invertlogic_ch1 : ");
+    Serial.println(invertlogic_ch1);
+    Serial.print("invertlogic_ch2 : ");
+    Serial.println(invertlogic_ch2);
+    Serial.print("edgeonly_ch1 : ");
+    Serial.println(edgeonly_ch1);
+    Serial.print("edgeonly_ch2 : ");
+    Serial.println(edgeonly_ch2);
+    Serial.print("pulser_ch1 : ");
+    Serial.println(pulser_ch1);
+    Serial.print("pulser_ch2 : ");
+    Serial.println(pulser_ch2);
   }
   void ReadFromEEPROM() {
     APN_NAME = eeprom.getString(("CyfWYXc"));
@@ -51,6 +79,20 @@ namespace MEMORY {
     NEUTRON_ENABLED = eeprom.getBool(("CN8MXWk"));
     WATCHDOG_ENABLED = eeprom.getBool(("CRZVhbs"));
     GPS_ENABLED = eeprom.getBool(("CY1oBQg"));
+    HVTARGET = eeprom.getInt(("CgFw89G"));
+    HVLIMIT = eeprom.getInt(("CTxBd7A"));
+    RAMPSPEED = eeprom.getInt(("CxMGkcc"));
+    THRESHOLD1 = eeprom.getInt(("CpBfHg0"));
+    THRESHOLD2 = eeprom.getInt(("CewhgDB"));
+    EEPROMCHOICE = eeprom.getInt(("Cjx4rRm"));
+    enable_ch1 = eeprom.getBool(("ChsmuDk"));
+    enable_ch2 = eeprom.getBool(("C7uz0ne"));
+    invertlogic_ch1 = eeprom.getBool(("CTlDtYP"));
+    invertlogic_ch2 = eeprom.getBool(("CrAHcNb"));
+    edgeonly_ch1 = eeprom.getBool(("CiAK7P9"));
+    edgeonly_ch2 = eeprom.getBool(("CICVmUt"));
+    pulser_ch1 = eeprom.getBool(("C1L1dLy"));
+    pulser_ch2 = eeprom.getBool(("Cv3jlxF"));
   }
   void WriteToEEPROM() {
     eeprom.putString(("CyfWYXc"), APN_NAME);
@@ -67,25 +109,53 @@ namespace MEMORY {
     eeprom.putBool(("CN8MXWk"), NEUTRON_ENABLED);
     eeprom.putBool(("CRZVhbs"), WATCHDOG_ENABLED);
     eeprom.putBool(("CY1oBQg"), GPS_ENABLED);
+    eeprom.putInt(("CgFw89G"), HVTARGET);
+    eeprom.putInt(("CTxBd7A"), HVLIMIT);
+    eeprom.putInt(("CxMGkcc"), RAMPSPEED);
+    eeprom.putInt(("CpBfHg0"), THRESHOLD1);
+    eeprom.putInt(("CewhgDB"), THRESHOLD2);
+    eeprom.putInt(("Cjx4rRm"), EEPROMCHOICE);
+    eeprom.putBool(("ChsmuDk"), enable_ch1);
+    eeprom.putBool(("C7uz0ne"), enable_ch2);
+    eeprom.putBool(("CTlDtYP"), invertlogic_ch1);
+    eeprom.putBool(("CrAHcNb"), invertlogic_ch2);
+    eeprom.putBool(("CiAK7P9"), edgeonly_ch1);
+    eeprom.putBool(("CICVmUt"), edgeonly_ch2);
+    eeprom.putBool(("C1L1dLy"), pulser_ch1);
+    eeprom.putBool(("Cv3jlxF"), pulser_ch2);
   }
   void Command(String message) {
     String parts[2];
     splitMessage(message, parts, 2);
-    if(parts[0] == F("APN_NAME")) eeprom.putString(("CyfWYXc"), parts[1]);
-    else if(parts[0] == F("USER_NAME")) eeprom.putString(("C0I9gk5"), parts[1]);
-    else if(parts[0] == F("PASS_NAME")) eeprom.putString(("CSdCTDg"), parts[1]);
-    else if(parts[0] == F("PMT_HV")) eeprom.putInt(("C9VLvyt"), parts[1].toInt());
-    else if(parts[0] == F("SLEEP_SEC")) eeprom.putInt(("CsxKDm0"), parts[1].toInt());
-    else if(parts[0] == F("WIFI_SSID")) eeprom.putString(("C5fizR0"), parts[1]);
-    else if(parts[0] == F("WIFI_PSWD")) eeprom.putString(("CbHxZAh"), parts[1]);
-    else if(parts[0] == F("WIFI_ENABLED")) eeprom.putBool(("CHGUwnd"), parts[1].toInt());
-    else if(parts[0] == F("OTA_ENABLED")) eeprom.putBool(("CBipS0e"), parts[1].toInt());
-    else if(parts[0] == F("DEEPSLEEP_ENABLED")) eeprom.putBool(("CGkzBBF"), parts[1].toInt());
-    else if(parts[0] == F("SERVER_ENABLED")) eeprom.putBool(("CBuhskS"), parts[1].toInt());
-    else if(parts[0] == F("NEUTRON_ENABLED")) eeprom.putBool(("CN8MXWk"), parts[1].toInt());
-    else if(parts[0] == F("WATCHDOG_ENABLED")) eeprom.putBool(("CRZVhbs"), parts[1].toInt());
-    else if(parts[0] == F("GPS_ENABLED")) eeprom.putBool(("CY1oBQg"), parts[1].toInt());
-    return;
+    if(parts[0] == F("APN_NAME")) APN_NAME = parts[1];
+    else if(parts[0] == F("USER_NAME")) USER_NAME = parts[1];
+    else if(parts[0] == F("PASS_NAME")) PASS_NAME = parts[1];
+    else if(parts[0] == F("PMT_HV")) PMT_HV = parts[1].toInt();
+    else if(parts[0] == F("SLEEP_SEC")) SLEEP_SEC = parts[1].toInt();
+    else if(parts[0] == F("WIFI_SSID")) WIFI_SSID = parts[1];
+    else if(parts[0] == F("WIFI_PSWD")) WIFI_PSWD = parts[1];
+    else if(parts[0] == F("WIFI_ENABLED")) WIFI_ENABLED = parts[1].toInt();
+    else if(parts[0] == F("OTA_ENABLED")) OTA_ENABLED = parts[1].toInt();
+    else if(parts[0] == F("DEEPSLEEP_ENABLED")) DEEPSLEEP_ENABLED = parts[1].toInt();
+    else if(parts[0] == F("SERVER_ENABLED")) SERVER_ENABLED = parts[1].toInt();
+    else if(parts[0] == F("NEUTRON_ENABLED")) NEUTRON_ENABLED = parts[1].toInt();
+    else if(parts[0] == F("WATCHDOG_ENABLED")) WATCHDOG_ENABLED = parts[1].toInt();
+    else if(parts[0] == F("GPS_ENABLED")) GPS_ENABLED = parts[1].toInt();
+    else if(parts[0] == F("HVTARGET")) HVTARGET = parts[1].toInt();
+    else if(parts[0] == F("HVLIMIT")) HVLIMIT = parts[1].toInt();
+    else if(parts[0] == F("RAMPSPEED")) RAMPSPEED = parts[1].toInt();
+    else if(parts[0] == F("THRESHOLD1")) THRESHOLD1 = parts[1].toInt();
+    else if(parts[0] == F("THRESHOLD2")) THRESHOLD2 = parts[1].toInt();
+    else if(parts[0] == F("EEPROMCHOICE")) EEPROMCHOICE = parts[1].toInt();
+    else if(parts[0] == F("enable_ch1")) enable_ch1 = parts[1].toInt();
+    else if(parts[0] == F("enable_ch2")) enable_ch2 = parts[1].toInt();
+    else if(parts[0] == F("invertlogic_ch1")) invertlogic_ch1 = parts[1].toInt();
+    else if(parts[0] == F("invertlogic_ch2")) invertlogic_ch2 = parts[1].toInt();
+    else if(parts[0] == F("edgeonly_ch1")) edgeonly_ch1 = parts[1].toInt();
+    else if(parts[0] == F("edgeonly_ch2")) edgeonly_ch2 = parts[1].toInt();
+    else if(parts[0] == F("pulser_ch1")) pulser_ch1 = parts[1].toInt();
+    else if(parts[0] == F("pulser_ch2")) pulser_ch2 = parts[1].toInt();
+  return;
   }
 
         
@@ -99,7 +169,7 @@ namespace MEMORY {
         if (!eeprom.getUInt("hasconfig", 0)) {
             Serial.println("Memory::CheckEEPROMValid() : Uploading EEPROM Defaults");
             eeprom.clear();
-            Print();
+            PrintEEPROM();
 
             WriteToEEPROM();
 
@@ -115,7 +185,7 @@ namespace MEMORY {
 
     }
 
-    Print();
+    PrintEEPROM();
     BOOT_COUNT += 1;
     return true;
   }

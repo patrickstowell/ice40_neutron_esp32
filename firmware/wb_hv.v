@@ -34,12 +34,12 @@ module wb_hv (
 
 
    always @(posedge clk_i) begin
-      HVTARGET <= DAC_CONTROL_CONFIG[15:0];
-      HVLIMIT <= DAC_CONTROL_CONFIG[31:16];
+      HVTARGET <= 2500; //DAC_CONTROL_CONFIG[15:0];
+      HVLIMIT <= 4000; //DAC_CONTROL_CONFIG[31:16];
       RAMPSPEED <= DAC_CONTROL_CONFIG[47:32];
-      THRESHOLD1 <= DAC_CONTROL_CONFIG[63:48];
-      THRESHOLD2 <= DAC_CONTROL_CONFIG[79:64];
-      EEPROMCHOICE <= DAC_CONTROL_CONFIG[95:80];
+      THRESHOLD1 <= 2100; //DAC_CONTROL_CONFIG[63:48];
+      THRESHOLD2 <= 4000; //DAC_CONTROL_CONFIG[79:64];
+      EEPROMCHOICE <= 3; //DAC_CONTROL_CONFIG[95:80];
       DAC_CURRENT_DATA[15:0] <= HVCURRENT;
    end   
 
@@ -134,7 +134,7 @@ module wb_hv (
                      .SDALINES(SDALINES));
 
    reg I2CACTIVEF = 1;
-   assign I2CENABLE = I2CACTIVEF & SENDI2C;
+   assign I2CENABLE = SENDI2C;
    
    ///////////////////////////////////////////////////////////////////////////
    ///////////////////////////////////////////////////////////////////////////
@@ -143,12 +143,12 @@ module wb_hv (
    ///
    ///////////////////////////////////////////////////////////////////////////
    ///////////////////////////////////////////////////////////////////////////
-   reg [26:0] i2clooper = 0;
+    reg [26:0] i2clooper = 0;
    always @(posedge clk_i) begin
       
       i2clooper <= i2clooper + 1;
       
-      case(i2clooper[26:22])	
+       case(i2clooper[26:22])	
 	1: 
 	  begin
 	     I2CLINES <= 2;

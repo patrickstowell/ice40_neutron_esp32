@@ -44,9 +44,7 @@ SB_HFOSC OSCInst0 (
     .CLKHFEN(CLK_SLOW_EN),
     .CLKHFPU(CLK_SLOW_POWERUP),
     .CLKHF(CLK_SLOW)
-)
-/* synthesis ROUTE_THROUGH_FABRIC=0 */;
-defparam OSCInst0.CLKHF_DIV = "0b00";
+);
 
 
 ///////////////////////////////////////
@@ -65,26 +63,26 @@ pll_200M PLLModule(
 ///////////////////////////////////////
 // SLOW RESET
 ///////////////////////////////////////
-reg [7:0] slow_reset_counter = 0;
+    reg [7:0] slow_reset_counter = 255;
 
 always @(posedge CLK_SLOW) begin
-    if (slow_reset_counter < 255)
-        slow_reset_counter <= slow_reset_counter + 1;
+    if (slow_reset_counter > 0)
+        slow_reset_counter <= slow_reset_counter - 1;
 end
 
-wire RESET_SLOW = !slow_reset_counter[7];
+wire RESET_SLOW = slow_reset_counter > 0;
 
 ///////////////////////////////////////
 // FAST RESET
 ///////////////////////////////////////
-reg [7:0] fast_reset_counter = 0;
+    reg [7:0] fast_reset_counter = 255;
 
 always @(posedge CLK_FAST) begin
-    if (fast_reset_counter < 255)
-        fast_reset_counter <= fast_reset_counter + 1;    
+    if (fast_reset_counter > 0)
+        fast_reset_counter <= fast_reset_counter - 1;    
 end
 
-wire RESET_FAST = !fast_reset_counter[7];
+wire RESET_FAST = fast_reset_counter > 0;
 
 
 endmodule

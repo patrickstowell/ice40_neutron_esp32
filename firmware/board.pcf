@@ -20,8 +20,8 @@ set_io DISCOUT1 43  # DISCOUT
 set_io PMT_LDO_PIN 36
 set_io 35 35 # EMPTY PAD
 set_io BOARD_SDA 37
-set_io PMT_SCL 34 
 set_io PMT_SDA 32 
+set_io PMT_SCL 34 
 set_io CLKIN 31
 set_io ADDR8 28 
 set_io ADDR6 26 
