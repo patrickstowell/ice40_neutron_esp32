@@ -1,0 +1,32 @@
+{
+    "files.associations": {
+        "ostream": "cpp",
+        "__hash_table": "cpp",
+        "__split_buffer": "cpp",
+        "__tree": "cpp",
+        "atomic": "cpp",
+        "deque": "cpp",
+        "forward_list": "cpp",
+        "ios": "cpp",
+        "list": "cpp",
+        "map": "cpp",
+        "set": "cpp",
+        "string": "cpp",
+        "system_error": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
+        "vector": "cpp",
+        "*.tcc": "cpp",
+        "any": "cpp",
+        "__bit_reference": "cpp",
+        "array": "cpp",
+        "initializer_list": "cpp",
+        "span": "cpp",
+        "string_view": "cpp",
+        "chrono": "cpp",
+        "format": "cpp",
+        "ranges": "cpp",
+        "text_encoding": "cpp",
+        "*.ipp": "cpp"
+    }
+}

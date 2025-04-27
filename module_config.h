@@ -61,6 +61,14 @@ namespace CONFIG {
     RTC_DATA_ATTR bool GPS_FOUND = true;
     RTC_DATA_ATTR bool SD_ENABLED = true;
 
+    RTC_DATA_ATTR uint16_t HVTARGET = 1200;
+    RTC_DATA_ATTR uint16_t HVLIMIT = 1200;
+    RTC_DATA_ATTR uint16_t RAMPSPEED = 1200;
+    RTC_DATA_ATTR uint16_t THRESHOLD1 = 200;
+    RTC_DATA_ATTR uint16_t THRESHOLD2 = 200;
+    RTC_DATA_ATTR uint8_t EEPROMCHOICE = 3;
+
+
 };
 
 namespace DATA {

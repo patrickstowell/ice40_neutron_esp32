@@ -31,6 +31,8 @@ module wb_hv (
    reg [11:0] THRESHOLD2;
    reg [2:0] EEPROMCHOICE;
 
+
+
    always @(posedge clk_i) begin
       HVTARGET <= DAC_CONTROL_CONFIG[15:0];
       HVLIMIT <= DAC_CONTROL_CONFIG[31:16];
@@ -38,7 +40,6 @@ module wb_hv (
       THRESHOLD1 <= DAC_CONTROL_CONFIG[63:48];
       THRESHOLD2 <= DAC_CONTROL_CONFIG[79:64];
       EEPROMCHOICE <= DAC_CONTROL_CONFIG[95:80];
-
       DAC_CURRENT_DATA[15:0] <= HVCURRENT;
    end   
 
