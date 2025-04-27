@@ -7,9 +7,16 @@ module TRIGGER_HANDLER(
     TRIGGER_OUT,
     LIVE_ACQUISITION,
     read_mode,
+    FORCE_TRIGGER_RESET,
+    SELF_TRIGGER_RESET,
+    SOFT_RESET,
+
     mconfig
 );
 
+input FORCE_TRIGGER_RESET;
+input SELF_TRIGGER_RESET;
+input SOFT_RESET;
 input CLK;
 input EDGE_TRIGGER;
 input TOT_TRIGGER;
@@ -38,7 +45,7 @@ reg [15:0] holdoff_counter = 1000;
 
 always @(posedge CLK) begin
 
-    if (or_trigger & trigger_state == 0) begin
+    if (or_trigger & trigger_state == 0 & !SOFT_RESET) begin
         trigger_state <= 1;
     end
 
@@ -52,7 +59,7 @@ always @(posedge CLK) begin
 
     if (trigger_state == 2) begin
         holdoff_counter <= holdoff_counter - (holdoff_counter > 0);
-        if (holdoff_counter == 0) begin
+        if (holdoff_counter == 0 && SELF_TRIGGER_RESET) begin
             holdoff_counter <= 10000;
             trigger_state <= 0;
         end
@@ -60,7 +67,7 @@ always @(posedge CLK) begin
 end
 
 // Create rising edge when moving from delay to holdoff
-wire TRIGGER_OUT = (trigger_state == 2);
+wire TRIGGER_OUT = (trigger_state == 2) & (!SOFT_RESET);
 wire LIVE_ACQUISITION = (trigger_state == 0);
 
 endmodule

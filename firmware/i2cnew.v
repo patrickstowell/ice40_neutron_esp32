@@ -42,7 +42,8 @@ o_reg_TOT_TRIGGER_CONFIG,
 o_reg_FILTER_TRIGGER_CONFIG,
 o_reg_TRIGGER_HANDLER_CONFIG,
 o_reg_DAC_CONTROL_CONFIG,
-i_reg_DAC_CURRENT_DATA
+i_reg_DAC_CURRENT_DATA,
+o_reg_CONTROL_BYTE
 );
 
 input SCL,RST;//asynchronous reset input
@@ -56,6 +57,8 @@ output reg [15:0] o_reg_TOT_WINDOW_LONG = `TOT_WINDOW_LONG_DEFAULT;
 output reg [15:0] o_reg_TOT_TRIGGER_CONFIG = `TOT_TRIGGER_CONFIG_DEFAULT;
 output reg [15:0] o_reg_FILTER_TRIGGER_CONFIG = `FILTER_TRIGGER_CONFIG_DEFAULT;
 output reg [15:0] o_reg_TRIGGER_HANDLER_CONFIG = `TRIGGER_HANDLER_CONFIG_DEFAULT;
+output reg [7:0] o_reg_CONTROL_BYTE = 0;
+
  
 output reg [95:0] o_reg_DAC_CONTROL_CONFIG = 0;
 input [15:0] i_reg_DAC_CURRENT_DATA;
@@ -267,6 +270,7 @@ begin
                 8'h17: o_reg_DAC_CONTROL_CONFIG[23:16] <= input_shift;
                 8'h18: o_reg_DAC_CONTROL_CONFIG[15:8] <= input_shift;
                 8'h19: o_reg_DAC_CONTROL_CONFIG[7:0] <= input_shift;
+                8'h20: o_reg_CONTROL_BYTE[7:0] <= input_shift;
 
                 endcase
         end
@@ -304,6 +308,7 @@ begin
                 8'h19: output_shift <= o_reg_DAC_CONTROL_CONFIG[7:0];
                 8'h1A: output_shift <= i_reg_DAC_CURRENT_DATA[15:8];
                 8'h1B: output_shift <= i_reg_DAC_CURRENT_DATA[7:0];
+                8'h20: output_shift <= o_reg_CONTROL_BYTE[7:0];
                 endcase
         end
         else
