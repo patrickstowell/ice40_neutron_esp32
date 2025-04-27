@@ -71,22 +71,22 @@ namespace MEMORY {
   void Command(String message) {
     String parts[2];
     splitMessage(message, parts, 2);
-    if(parts[0] == F("APN_NAME")) eeprom.putString(("CyfWYXc"), parts[1].toString());
-    else if(parts[0] == F("USER_NAME")) eeprom.putString(("C0I9gk5"), parts[1].toString());
-    else if(parts[0] == F("PASS_NAME")) eeprom.putString(("CSdCTDg"), parts[1].toString());
+    if(parts[0] == F("APN_NAME")) eeprom.putString(("CyfWYXc"), parts[1]);
+    else if(parts[0] == F("USER_NAME")) eeprom.putString(("C0I9gk5"), parts[1]);
+    else if(parts[0] == F("PASS_NAME")) eeprom.putString(("CSdCTDg"), parts[1]);
     else if(parts[0] == F("PMT_HV")) eeprom.putInt(("C9VLvyt"), parts[1].toInt());
     else if(parts[0] == F("SLEEP_SEC")) eeprom.putInt(("CsxKDm0"), parts[1].toInt());
-    else if(parts[0] == F("WIFI_SSID")) eeprom.putString(("C5fizR0"), parts[1].toString());
-    else if(parts[0] == F("WIFI_PSWD")) eeprom.putString(("CbHxZAh"), parts[1].toString());
-    else if(parts[0] == F("WIFI_ENABLED")) eeprom.putBool(("CHGUwnd"), parts[1].toBool());
-    else if(parts[0] == F("OTA_ENABLED")) eeprom.putBool(("CBipS0e"), parts[1].toBool());
-    else if(parts[0] == F("DEEPSLEEP_ENABLED")) eeprom.putBool(("CGkzBBF"), parts[1].toBool());
-    else if(parts[0] == F("SERVER_ENABLED")) eeprom.putBool(("CBuhskS"), parts[1].toBool());
-    else if(parts[0] == F("NEUTRON_ENABLED")) eeprom.putBool(("CN8MXWk"), parts[1].toBool());
-    else if(parts[0] == F("WATCHDOG_ENABLED")) eeprom.putBool(("CRZVhbs"), parts[1].toBool());
-    else if(parts[0] == F("GPS_ENABLED")) eeprom.putBool(("CY1oBQg"), parts[1].toBool());
-  return
-}
+    else if(parts[0] == F("WIFI_SSID")) eeprom.putString(("C5fizR0"), parts[1]);
+    else if(parts[0] == F("WIFI_PSWD")) eeprom.putString(("CbHxZAh"), parts[1]);
+    else if(parts[0] == F("WIFI_ENABLED")) eeprom.putBool(("CHGUwnd"), parts[1].toInt());
+    else if(parts[0] == F("OTA_ENABLED")) eeprom.putBool(("CBipS0e"), parts[1].toInt());
+    else if(parts[0] == F("DEEPSLEEP_ENABLED")) eeprom.putBool(("CGkzBBF"), parts[1].toInt());
+    else if(parts[0] == F("SERVER_ENABLED")) eeprom.putBool(("CBuhskS"), parts[1].toInt());
+    else if(parts[0] == F("NEUTRON_ENABLED")) eeprom.putBool(("CN8MXWk"), parts[1].toInt());
+    else if(parts[0] == F("WATCHDOG_ENABLED")) eeprom.putBool(("CRZVhbs"), parts[1].toInt());
+    else if(parts[0] == F("GPS_ENABLED")) eeprom.putBool(("CY1oBQg"), parts[1].toInt());
+    return;
+  }
 
         
   bool begin() {
@@ -124,5 +124,4 @@ namespace MEMORY {
       return true; 
   }
 
-}
 }

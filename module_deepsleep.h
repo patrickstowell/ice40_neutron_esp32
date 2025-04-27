@@ -24,9 +24,11 @@ namespace DEEPSLEEP {
     Serial.print("DeepSleep : Sleeping for : ");
     Serial.println(sleeptime);
 
-    if (CONFIG::BOOT_COUNT < 10) {    
+    if (CONFIG::BOOT_COUNT > 10) {    
       esp_sleep_enable_timer_wakeup(((uint64_t)sleeptime) * uS_TO_S_FACTOR);
       esp_deep_sleep_start();
+    } else {
+      delay(1000);
     }
 
     return true;

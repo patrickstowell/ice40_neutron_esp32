@@ -80,7 +80,8 @@ namespace NEUTRON {
     if (!CONFIG::NEUTRON_ENABLED) return true;
 
     // Setup I2C
-    Wire.begin(I2C_SCL, I2C_SDA);
+    // Wire.begin(I2C_SCL, I2C_SDA);
+    I2C::begin();
     // Wire.setSpeed(I2C_SPEED);
 
     // Set FPGA Settings
@@ -123,6 +124,7 @@ namespace NEUTRON {
     // SAT::queue(message);
 
     // Upload FPGA Settings
+    ConfigureFPGA();
 
     // Clear Buffers
 

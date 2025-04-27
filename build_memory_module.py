@@ -90,6 +90,8 @@ for i in range(len(varlist)):
   toconv = ""
 
 
+sdadsa DONT NEED TO PUT TO EEPROM, JUST CHANGE LOCALLY, and HAVE A COMMAND TO UPDATE EEPROM AFTERWARDS? OR MODIFY BOTH.
+
   if i == 0:
     f.write(f"    if(parts[0] == F(\"{nam}\")) eeprom.put{var}((\"{vhash}\"), parts[1].to{var}());\n")
   else:

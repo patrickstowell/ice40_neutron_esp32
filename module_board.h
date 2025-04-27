@@ -4,6 +4,15 @@
 
 
 namespace I2C {
+
+  bool active = false;
+  void begin(){
+    if (active) return;
+    active = true;
+    Wire.begin(21,22);
+
+  }
+
   uint8_t write_byte_data(byte index, byte addr, byte val){
     Wire.beginTransmission(index); // transmit to device #4
     // delay(50);
