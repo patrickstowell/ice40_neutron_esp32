@@ -1,6 +1,6 @@
 #!/bin/sh
 apio clean
-apio build 
+apio build --verbose
 datev=$(date  +"%y%m%d-%H%M")
 #cp ../fw.h ../fw_backups/fw_${datev}.h
 echo -n "const " > ../fw.h && xxd -i hardware.bin >> ../fw.h

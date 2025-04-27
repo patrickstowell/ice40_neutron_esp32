@@ -41,10 +41,16 @@ module I2C4BYTES(
     wire module0_active = 0; //(bits_to_send > 0) & I2CLINES[0];
     wire module1_active = (bits_to_send > 0); // & I2CLINES[1];
                            
-    assign SCLLINES[0] = (bits_to_send > 0) & I2CLINES[0] & ~scl_current[167];
-    assign SDALINES[0] = (bits_to_send > 0) & I2CLINES[0] & ~sda_current[167];
-    assign SCLLINES[1] = (bits_to_send > 0) & I2CLINES[1] & ~scl_current[167];
-    assign SDALINES[1] = (bits_to_send > 0) & I2CLINES[1] & ~sda_current[167];
+    // assign SCLLINES[0] = (bits_to_send > 0) & I2CLINES[0] & ~scl_current[167];
+    // assign SDALINES[0] = (bits_to_send > 0) & I2CLINES[0] & ~sda_current[167];
+    // assign SCLLINES[1] = (bits_to_send > 0) & I2CLINES[1] & ~scl_current[167];
+    // assign SDALINES[1] = (bits_to_send > 0) & I2CLINES[1] & ~sda_current[167];
+
+                            
+    assign SCLLINES[0] = ((bits_to_send > 0) & ~scl_current[167]) | !I2CLINES[0] | (bits_to_send == 0);
+    assign SDALINES[0] = ((bits_to_send > 0) & ~sda_current[167]) | !I2CLINES[0] |  (bits_to_send == 0);
+    assign SCLLINES[1] = ((bits_to_send > 0) & ~scl_current[167]) | !I2CLINES[1] |  (bits_to_send == 0);
+    assign SDALINES[1] = ((bits_to_send > 0) & ~sda_current[167]) | !I2CLINES[1] |  (bits_to_send == 0);
 
                            
     // assign SCLLINES[0] = (module0_active & ~scl_current[167]) | !module0_active;
