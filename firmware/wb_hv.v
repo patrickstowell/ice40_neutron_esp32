@@ -157,27 +157,27 @@ module wb_hv (
 	     SENDI2C <= 0;
 	  end
 	2: SENDI2C <= 1;
-	3: SENDI2C <= 0;
+	5: SENDI2C <= 0;
 	
-	4: 
+	6: 
 	  begin
 	     I2CLINES <= 2;
 	     I2CDATA12 <= {8'b11000010,EEPROMCHOICE,5'b00000};
              I2CDATA34 <= {THRESHOLD2, 4'b0000};
              SENDI2C	<= 0;
 	  end
-	5: SENDI2C <= 1;
-	6: SENDI2C <= 0;
+	7: SENDI2C <= 1;
+	10: SENDI2C <= 0;
 
-	7:
+	11:
 	  begin
              I2CLINES <= 1;
              I2CDATA12 <= {8'b11000000,EEPROMCHOICE,5'b00000};
              I2CDATA34 <= {HVCURRENT, 4'b0000};
              SENDI2C    <= 0;
           end
-	8: SENDI2C <= 1;
-	9: SENDI2C <= 0;
+	12: SENDI2C <= 1;
+	15: SENDI2C <= 0;
 
 	
 	

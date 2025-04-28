@@ -82,7 +82,7 @@ module I2C4BYTES(
                            sdahigh,
                            sdastart,
                            scldelay,
-			   I2CDATA12[15] ? sdahigh : sdalow,
+            			   I2CDATA12[15] ? sdahigh : sdalow,
                            I2CDATA12[14] ? sdahigh : sdalow,
                            I2CDATA12[13] ? sdahigh : sdalow,
                            I2CDATA12[12] ? sdahigh : sdalow,
@@ -90,8 +90,8 @@ module I2C4BYTES(
                            I2CDATA12[10] ? sdahigh : sdalow,
                            I2CDATA12[ 9] ? sdahigh : sdalow,
                            I2CDATA12[ 8] ? sdahigh : sdalow,
-			   sdalow,
-			   I2CDATA12[7] ? sdahigh : sdalow,
+            			   sdalow,
+            			   I2CDATA12[7] ? sdahigh : sdalow,
                            I2CDATA12[6] ? sdahigh : sdalow,
                            I2CDATA12[5] ? sdahigh : sdalow,
                            I2CDATA12[4] ? sdahigh : sdalow,
@@ -108,7 +108,7 @@ module I2C4BYTES(
                            I2CDATA34[10] ? sdahigh : sdalow,
                            I2CDATA34[ 9] ? sdahigh : sdalow,
                            I2CDATA34[ 8] ? sdahigh : sdalow,
-			   sdalow,
+            			   sdalow,
                            I2CDATA34[ 7] ? sdahigh : sdalow,
                            I2CDATA34[ 6] ? sdahigh : sdalow,
                            I2CDATA34[ 5] ? sdahigh : sdalow,
@@ -126,7 +126,7 @@ module I2C4BYTES(
                              sclstart,
                              scldelay,
 
-			     sclperiod,
+            			     sclperiod,
                              sclperiod,
                              sclperiod,
                              sclperiod,
@@ -146,7 +146,7 @@ module I2C4BYTES(
                              sclperiod,
                              sclperiod,
 			     
-			     sclperiod,
+            			     sclperiod,
 			     
                              sclperiod,
                              sclperiod,
@@ -157,7 +157,7 @@ module I2C4BYTES(
                              sclperiod,
                              sclperiod,
 
-			     sclperiod,
+            			     sclperiod,
 			     
                              sclperiod,
                              sclperiod,

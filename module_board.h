@@ -31,7 +31,7 @@ void begin() {
   bus.onRequest(onRequest);
   bus.setPins(I2C2_SDA_PIN, I2C2_SCL_PIN);
   // bus.begin(0x55);
-  bus.begin(0xC0);
+  bus.begin(0x60);
 }
 
 }

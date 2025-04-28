@@ -349,17 +349,19 @@ module TOP (
     // assign PMT_SCL = BOARD_SCL;
     // assign PMT_SDA = BOARD_SDA;
 
-    // assign PMT_SCL = scllines[1];
-    // assign PMT_SDA = sdalines[1];
+    assign PMT_SCL = scllines[1];
+    assign PMT_SDA = sdalines[1];
     
-    wire [1:0] scllines = {
-    DISC_SCL,
-    PMT_SCL
-  };
-    wire [1:0] sdalines = {
-    DISC_SDA,
-    PMT_SDA
-  };
+    wire [1:0] scllines;
+  //   = {
+  //   DISC_SCL,
+  //   PMT_SCL
+  // };
+    wire [1:0] sdalines;
+    // = {
+    // DISC_SDA,
+    // PMT_SDA
+  // };
 
   // assign sdalines[0] = 1;
   // assign sdalines[1] = 1;
