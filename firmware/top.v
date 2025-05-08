@@ -36,14 +36,14 @@ module TOP (
   ///////////////////////////////////////////////////////////////////////////
   assign AMP_LDO_PIN = 1;
   assign PMT_LDO_PIN = 1;
-  assign ADDR8 = 1;
-  assign ADDR7 = 0;
-  assign ADDR6 = 1;
-  assign ADDR5 = 0;
-  assign ADDR4 = 1;
-  assign ADDR3 = 0;
-  assign ADDR2 = 1;
-  assign ADDR1 = 1;
+  assign ADDR8 = OUTPUTBIT[7];
+  assign ADDR7 = OUTPUTBIT[6];
+  assign ADDR6 = OUTPUTBIT[5];
+  assign ADDR5 = OUTPUTBIT[4];
+  assign ADDR4 = OUTPUTBIT[3];
+  assign ADDR3 = OUTPUTBIT[2];
+  assign ADDR2 = OUTPUTBIT[1];
+  assign ADDR1 = OUTPUTBIT[0];
   assign EXTSPI_SDI = 1;
 
   wire [7:0] CONFIG_GLOBAL;
@@ -85,7 +85,7 @@ module TOP (
   reg [1:0] CLK_SLOW_HALF_GEN = 0;
   reg [7:0] CLK_SLOW_EIGHT_GEN = 0;
 
-  always @(posedge CLK_SLOW) begin
+  always @(posedge CLK_SLOW_GEN) begin
     CLK_SLOW_HALF_GEN <= CLK_SLOW_HALF_GEN + 1;
     CLK_SLOW_EIGHT_GEN <= CLK_SLOW_EIGHT_GEN + 1;
   end
@@ -349,6 +349,9 @@ module TOP (
     // assign PMT_SCL = BOARD_SCL;
     // assign PMT_SDA = BOARD_SDA;
 
+   assign DISC_SCL = scllines[0];
+   assign DISC_SDA = sdalines[0];
+
     assign PMT_SCL = scllines[1];
     assign PMT_SDA = sdalines[1];
     
@@ -381,16 +384,18 @@ module TOP (
 
   wire [95:0] DAC_CONTROL_CONFIG;
   wire [15:0] DAC_CURRENT_DATA;
+  wire [7:0] OUTPUTBIT;
 
   wb_hv hvinterface (
-      .clk_i(CLK_FAST),
-      .rst_i(RESET_FAST),
+      .clk_i(CLK_SLOW),
+      .rst_i(RESET_SLOW),
 
     .DAC_CONTROL_CONFIG(DAC_CONTROL_CONFIG),
     .DAC_CURRENT_DATA(DAC_CURRENT_DATA),
    
     .SCLLINES(scllines),
-    .SDALINES(sdalines)
+    .SDALINES(sdalines),
+    .OUTPUTBIT(OUTPUTBIT)
   );
 
 

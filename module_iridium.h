@@ -14,6 +14,7 @@ namespace SAT {
   bool queue(String message){
     Serial.print("SAT:");
     Serial.println(message);
+    return true;
   }
 
 }

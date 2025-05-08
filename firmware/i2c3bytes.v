@@ -31,8 +31,8 @@ module I2C4BYTES(
     localparam ENDOFFSET = 2;
     localparam sclstart = 4'b1110;
     localparam sdastart = 4'b1100;
-    localparam sclend = 4'b0111;
-    localparam sdaend = 4'b0011;
+    localparam sclend = 4'b1111;
+    localparam sdaend = 4'b0111;
     localparam scldelay = 4'b0000;
     localparam sclperiod = 4'b0110;
     localparam sdahigh = 4'b1111;
@@ -47,10 +47,10 @@ module I2C4BYTES(
     // assign SDALINES[1] = (bits_to_send > 0) & I2CLINES[1] & ~sda_current[167];
 
                             
-    assign SCLLINES[0] = ((bits_to_send > 0) & ~scl_current[167]) | !I2CLINES[0] | (bits_to_send == 0);
-    assign SDALINES[0] = ((bits_to_send > 0) & ~sda_current[167]) | !I2CLINES[0] |  (bits_to_send == 0);
-    assign SCLLINES[1] = ((bits_to_send > 0) & ~scl_current[167]) | !I2CLINES[1] |  (bits_to_send == 0);
-    assign SDALINES[1] = ((bits_to_send > 0) & ~sda_current[167]) | !I2CLINES[1] |  (bits_to_send == 0);
+    assign SCLLINES[0] = ((bits_to_send > 0) & scl_current[167]) | !I2CLINES[0] | (bits_to_send == 0);
+    assign SDALINES[0] = ((bits_to_send > 0) & sda_current[167]) | !I2CLINES[0] |  (bits_to_send == 0);
+    assign SCLLINES[1] = ((bits_to_send > 0) & scl_current[167]) | !I2CLINES[1] |  (bits_to_send == 0);
+    assign SDALINES[1] = ((bits_to_send > 0) & sda_current[167]) | !I2CLINES[1] |  (bits_to_send == 0);
 
                            
     // assign SCLLINES[0] = (module0_active & ~scl_current[167]) | !module0_active;

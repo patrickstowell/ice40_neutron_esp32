@@ -18,7 +18,8 @@ module wb_hv (
    // output reg [11:0] HVCURRENT,
    output reg [15:0] DAC_CURRENT_DATA,
    output [1:0] SCLLINES,
-   output [1:0] SDALINES
+   output [1:0] SDALINES,
+   output [7:0] OUTPUTBIT
 );
 
    wire [95:0] DAC_CONTROL_CONFIG;
@@ -34,12 +35,15 @@ module wb_hv (
 
 
    always @(posedge clk_i) begin
-      HVTARGET <= 2500; //DAC_CONTROL_CONFIG[15:0];
-      HVLIMIT <= 4000; //DAC_CONTROL_CONFIG[31:16];
-      RAMPSPEED <= DAC_CONTROL_CONFIG[47:32];
-      THRESHOLD1 <= 2100; //DAC_CONTROL_CONFIG[63:48];
-      THRESHOLD2 <= 4000; //DAC_CONTROL_CONFIG[79:64];
-      EEPROMCHOICE <= 3; //DAC_CONTROL_CONFIG[95:80];
+      HVTARGET <= 1400; //DAC_CONTROL_CONFIG[15:0];
+
+      HVLIMIT <= 1600; //DAC_CONTROL_CONFIG[31:16];
+
+      RAMPSPEED <= 1000; //DAC_CONTROL_CONFIG[47:32];
+      THRESHOLD1 <= 100; //DAC_CONTROL_CONFIG[63:48];
+      THRESHOLD2 <= 400; //DAC_CONTROL_CONFIG[79:64];
+      EEPROMCHOICE <= 3'b010; //DAC_CONTROL_CONFIG[95:80];
+
       DAC_CURRENT_DATA[15:0] <= HVCURRENT;
    end   
 
@@ -91,7 +95,7 @@ module wb_hv (
    ///
    ///////////////////////////////////////////////////////////////////////////
    ///////////////////////////////////////////////////////////////////////////
-   reg [11:0] HVCURRENT = 1100;
+   reg [11:0] HVCURRENT = 0;
    reg 	      HVENABLE = 1;
    
    reg [31:0] hvcounter = 1;
@@ -135,7 +139,16 @@ module wb_hv (
 
    reg I2CACTIVEF = 1;
    assign I2CENABLE = SENDI2C;
-   
+
+   assign OUTPUTBIT[0] = I2CENABLE;
+   assign OUTPUTBIT[1] = I2CLINES[0];
+   assign OUTPUTBIT[2] = I2CLINES[1];
+   assign OUTPUTBIT[3] = SCLLINES[2];
+   assign OUTPUTBIT[4] = SDALINES[3];
+   assign OUTPUTBIT[5] = i2clooper[26:22] == 1;
+   assign OUTPUTBIT[6] = i2clooper[26:22] == 2;
+   assign OUTPUTBIT[7] = clk_i;
+
    ///////////////////////////////////////////////////////////////////////////
    ///////////////////////////////////////////////////////////////////////////
    ///
@@ -151,7 +164,7 @@ module wb_hv (
        case(i2clooper[26:22])	
 	1: 
 	  begin
-	     I2CLINES <= 2;
+	     I2CLINES <= 1;
 	     I2CDATA12 <= {8'b11000000,EEPROMCHOICE,5'b00000};
 	     I2CDATA34 <= {THRESHOLD1, 4'b0000};
 	     SENDI2C <= 0;
@@ -161,7 +174,7 @@ module wb_hv (
 	
 	6: 
 	  begin
-	     I2CLINES <= 2;
+	     I2CLINES <= 1;
 	     I2CDATA12 <= {8'b11000010,EEPROMCHOICE,5'b00000};
              I2CDATA34 <= {THRESHOLD2, 4'b0000};
              SENDI2C	<= 0;
@@ -171,7 +184,7 @@ module wb_hv (
 
 	11:
 	  begin
-             I2CLINES <= 1;
+             I2CLINES <= 2;
              I2CDATA12 <= {8'b11000000,EEPROMCHOICE,5'b00000};
              I2CDATA34 <= {HVCURRENT, 4'b0000};
              SENDI2C    <= 0;

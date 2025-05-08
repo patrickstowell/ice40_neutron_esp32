@@ -20,7 +20,8 @@ namespace I2C2 {
 void onReceive(int len) {
   Serial.printf("onReceive[%d]: ", len);
   while (bus.available()) {
-    Serial.print(bus.read(), DEC);
+    Serial.print(bus.read(), HEX);
+    Serial.print(" ");
   }
   Serial.println();
 }
